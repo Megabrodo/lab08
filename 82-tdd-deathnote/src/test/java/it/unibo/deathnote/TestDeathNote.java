@@ -63,6 +63,11 @@ class TestDeathNote {
     @Test
     public void testCause() throws InterruptedException { // NOPMD Needed for the assignment
         assertThrows(IllegalStateException.class, () -> deathnote.writeDeathCause("Killed himself"));
+        /* Potential different implementation (which violates PMD)
+         * try {
+         *      deathnote.writeDeathCause("Killed himself");
+         * } catch {}
+         */
         final String name1 = "Vladimir Putin";
         deathnote.writeName(name1);
         assertEquals("Heart attack", deathnote.getDeathCause(name1));
@@ -78,6 +83,11 @@ class TestDeathNote {
     @Test
     public void testDetails() throws InterruptedException { // NOPMD Needed for the assignment
         assertThrows(IllegalStateException.class, () -> deathnote.writeDetails("He got pranked by Jonh"));
+        /* Potential different implementation (which violates PMD)
+         * try {
+         *      deathnote.writeDetails("He got pranked by Jonh");
+         * } catch {}
+         */
         final String name1 = "Tom Howard";
         deathnote.writeName(name1);
         assertEquals("", deathnote.getDeathDetails(name1));
