@@ -34,17 +34,17 @@ public class MiniGUI {
      */
     public MiniGUI() {
         final JPanel canvas = new JPanel();
-        final JPanel horizontal_canvas = new JPanel();
+        final JPanel horizontalcanvas = new JPanel();
 
         canvas.setLayout(new BorderLayout());
-        horizontal_canvas.setLayout(new BoxLayout(horizontal_canvas, BoxLayout.LINE_AXIS));
-        canvas.add(horizontal_canvas, BorderLayout.CENTER);
+        horizontalcanvas.setLayout(new BoxLayout(horizontalcanvas, BoxLayout.LINE_AXIS));
+        canvas.add(horizontalcanvas, BorderLayout.CENTER);
         final JButton write = new JButton("Print a random number on standard output");
-        horizontal_canvas.add(write);
+        horizontalcanvas.add(write);
 
-        final JTextField result = new JTextField();
+        final JTextField result = new JTextField("Result");
         canvas.add(result, BorderLayout.NORTH);
-        
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -53,9 +53,9 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                int n = randomGenerator.nextInt();
+                final int n = randomGenerator.nextInt();
                 result.setText(Integer.toString(n));
-                System.out.println(n);
+                System.out.println(n); //NOPMD we don't use log
             }
         });
     }
@@ -99,5 +99,4 @@ public class MiniGUI {
     public static void main(final String... args) {
         new MiniGUI().display();
     }
-
 }
