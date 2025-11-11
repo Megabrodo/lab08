@@ -26,3 +26,7 @@ tasks.withType<Test> {
     }
     testLogging.showStandardStreams = true
 }
+
+dependencies {
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3")
+}
