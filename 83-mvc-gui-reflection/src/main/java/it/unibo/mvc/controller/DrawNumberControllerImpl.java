@@ -4,7 +4,11 @@ import it.unibo.mvc.api.DrawNumber;
 import it.unibo.mvc.api.DrawNumberController;
 import it.unibo.mvc.api.DrawNumberView;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class implements the game controller. It orchestrates the game, exposes methods to its observers
@@ -13,7 +17,8 @@ import java.util.Objects;
 public final class DrawNumberControllerImpl implements DrawNumberController {
 
     private final DrawNumber model;
-    private DrawNumberView view;
+    //private DrawNumberView view;
+    private final Collection<DrawNumberView> views = new HashSet<>();
 
     /**
      * Builds a new game controller provided a game model.
@@ -27,17 +32,19 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
     @Override
     public void addView(final DrawNumberView view) {
         Objects.requireNonNull(view, "Cannot set a null view");
-        if (this.view != null) {
+        /*if (this.view != null) {
             throw new IllegalStateException("The view is already set! Multiple views are not supported");
-        }
-        this.view = view;
+        }*/
+        this.views.add(view);
         view.setController(this);
         view.start();
     }
 
     @Override
     public void newAttempt(final int n) {
-        Objects.requireNonNull(view, "There is no view attached!").result(model.attempt(n));
+        for (final DrawNumberView view : views) {
+            Objects.requireNonNull(view, "There is no view attached!").result(model.attempt(n));
+        }
     }
 
     @Override
@@ -46,6 +53,10 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
     }
 
     @Override
+    @SuppressFBWarnings(
+        value = "DM_EXIT",
+        justification = "This is intended behaviour"
+    )
     public void quit() {
         /*
          * A bit harsh. A good application should configure the graphics to exit by
@@ -55,5 +66,4 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
          */
         System.exit(0);
     }
-
 }

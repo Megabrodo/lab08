@@ -53,74 +53,74 @@ public class DeathNoteImpl implements DeathNote {
     }
     
     @Override
-    public void writeName(final String name){
+    public void writeName(final String name) {
         if (name == null){
             throw new NullPointerException("Name is null");
         }
-        else{
+        else {
             thisEntry = new Entry();
             deathnote.put(name, thisEntry);
         }
     }
 
     @Override
-    public boolean writeDeathCause(final String cause){
+    public boolean writeDeathCause(final String cause) {
         if (deathnote.isEmpty() || cause==null){
             throw new IllegalStateException("Cause null or deathnote is empty");
         }
-        else{
+        else {
             if (System.currentTimeMillis() - thisEntry.getTime() <= MAX_TIME_CAUSE){
                 thisEntry.setCause(cause);
                 return true;
             }
-            else{
+            else {
                 return false;
             }
         }
     }
 
     @Override
-    public boolean writeDetails(final String details){
+    public boolean writeDetails(final String details) {
         if (deathnote.isEmpty() || details==null){
             throw new IllegalStateException("Details null or deathnote is empty");
         }
-        else{
+        else {
             if (System.currentTimeMillis() - thisEntry.getTime() <= MAX_TIME_CAUSE*10){
                 thisEntry.setDetails(details);
                 return true;
             }
-            else{
+            else {
                 return false;
             }
         }
     }
 
     @Override
-    public String getDeathCause(String name){
+    public String getDeathCause(String name) {
         if (!isNameWritten(name)){
             throw new IllegalArgumentException("Name not in deathnote");
         }
-        else{
+        else {
             return deathnote.get(name).getCause();
         }
     }
 
     @Override
-    public String getDeathDetails(String name){
+    public String getDeathDetails(String name) {
         if (!isNameWritten(name)){
             throw new IllegalArgumentException("Name not in deathnote");
         }
-        else{
+        else {
             return deathnote.get(name).getDetails();
         }
     }
 
     @Override
-    public boolean isNameWritten(String name){
+    public boolean isNameWritten(String name) {
         if (deathnote.containsKey(name)){
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
