@@ -47,7 +47,7 @@ public final class DeathNoteImpl implements DeathNote {
     @Override
     public boolean writeDeathCause(final String cause) {
         if (deathnote.isEmpty() || cause == null || thisEntry == null) {
-            throw new IllegalStateException("Cause null or deathnote is empty");
+            throw new IllegalStateException("Cause null or deathnote is empty or entry null");
         } else {
             if (System.currentTimeMillis() - thisEntry.getTime() <= MAX_TIME_CAUSE) {
                 thisEntry.setCause(cause);
@@ -61,7 +61,7 @@ public final class DeathNoteImpl implements DeathNote {
     @Override
     public boolean writeDetails(final String details) {
         if (deathnote.isEmpty() || details == null || thisEntry == null) {
-            throw new IllegalStateException("Details null or deathnote is empty");
+            throw new IllegalStateException("Details null or deathnote is empty or entry null");
         } else {
             if (System.currentTimeMillis() - thisEntry.getTime() <= MAX_TIME_CAUSE * 10) {
                 thisEntry.setDetails(details);

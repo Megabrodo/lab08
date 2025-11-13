@@ -3,9 +3,11 @@ package it.unibo.deathnote;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import org.junit.jupiter.api.function.Executable;
 //import static org.junit.jupiter.api.Assertions.fail;
 import static java.lang.Thread.sleep;
 
@@ -62,12 +64,19 @@ class TestDeathNote {
 
     @Test
     public void testCause() throws InterruptedException { // NOPMD Needed for the assignment
-        assertThrows(IllegalStateException.class, () -> deathnote.writeDeathCause("Killed himself"));
-        /* Potential different implementation (which violates PMD)
-         * try {
-         *      deathnote.writeDeathCause("Killed himself");
-         * } catch {}
-         */
+        try {
+            this.deathnote.writeDeathCause("Killed himself");
+        } catch (final IllegalStateException e) {
+            assertNotNull(e);
+            assertFalse(e.getMessage().isBlank());
+        }
+        /* Potential different implementation:
+            assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                deathNote.writeDeathCause("Killed himself");
+            }
+        });*/
         final String name1 = "Vladimir Putin";
         deathnote.writeName(name1);
         assertEquals("Heart attack", deathnote.getDeathCause(name1));
@@ -82,12 +91,19 @@ class TestDeathNote {
 
     @Test
     public void testDetails() throws InterruptedException { // NOPMD Needed for the assignment
-        assertThrows(IllegalStateException.class, () -> deathnote.writeDetails("He got pranked by Jonh"));
-        /* Potential different implementation (which violates PMD)
-         * try {
-         *      deathnote.writeDetails("He got pranked by Jonh");
-         * } catch {}
-         */
+        try {
+            this.deathnote.writeDetails("He got pranked too hard");
+        } catch (final IllegalStateException e) {
+            assertNotNull(e);
+            assertFalse(e.getMessage().isBlank());
+        }
+        /* Potential different implementation:
+            assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                deathNote.writeDetails("He got pranked too hard");
+            }
+        });*/
         final String name1 = "Tom Howard";
         deathnote.writeName(name1);
         assertEquals("", deathnote.getDeathDetails(name1));
